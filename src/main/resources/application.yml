@@ -4,7 +4,7 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "*"
+            allowedOrigins: ${gateway.origin.url}
             allowedMethods:
               - GET
               - POST
@@ -15,19 +15,19 @@ spring:
             allowedHeaders: '*'
       routes:
         - id: loginRouteService1
-          uri: http://localhost:8081
+          uri: ${gateway.service1.url}
           predicates:
             - Path=/api/login
           filters:
             - RewritePath=/api/login, /api/monolith/login
         - id: publicRoutesService1
-          uri: http://localhost:8081
+          uri: ${gateway.service1.url}
           predicates:
             - Path=/api/public/**
           filters:
             - RewritePath=/api/public/, /api/monolith/public/
         - id: restrictedRoutesService1
-          uri: http://localhost:8081
+          uri: ${gateway.service1.url}
           predicates:
             - Path=/api/restricted/**
           filters:
@@ -35,7 +35,7 @@ spring:
             - RoleAdmAuthorizationFilter
             - RewritePath=/api/restricted/, /api/monolith/restricted/
         - id: authenticatedRoutesService1
-          uri: http://localhost:8081
+          uri: ${gateway.service1.url}
           predicates:
             - Path=/api/**
           filters:
