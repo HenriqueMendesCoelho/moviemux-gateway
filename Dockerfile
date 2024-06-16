@@ -1,11 +1,12 @@
-FROM maven:3.9.6-amazoncorretto-21
-
-ENV TZ=America/Sao_Paulo
-
+FROM amazoncorretto:21-alpine3.19 AS build
+WORKDIR /app
 COPY . .
+RUN chmod +x gradlew
+RUN ./gradlew build -x test
 
-RUN ./gradlew build
-
+FROM amazoncorretto:21-alpine3.19
+ENV TZ=America/Sao_Paulo
+WORKDIR /app
+COPY --from=build /app/build/libs/*.jar /app/app.jar
 EXPOSE 8080
-
-CMD ["java", "-jar", "build/libs/gateway-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "/app/app.jar"]
