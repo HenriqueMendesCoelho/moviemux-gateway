@@ -1,0 +1,43 @@
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+              - HEAD
+            allowedHeaders: '*'
+      routes:
+        - id: loginRouteService1
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/login
+          filters:
+            - RewritePath=/api/login, /api/monolith/login
+        - id: publicRoutesService1
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/public/**
+          filters:
+            - RewritePath=/api/public/, /api/monolith/public/
+        - id: restrictedRoutesService1
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/restricted/**
+          filters:
+            - JwtAuthenticationFilter
+            - RoleAdmAuthorizationFilter
+            - RewritePath=/api/restricted/, /api/monolith/restricted/
+        - id: authenticatedRoutesService1
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/**
+          filters:
+            - JwtAuthenticationFilter
+            - RewritePath=/api/, /api/monolith/
