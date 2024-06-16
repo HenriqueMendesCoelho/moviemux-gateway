@@ -7,6 +7,6 @@ RUN ./gradlew build -x test
 FROM amazoncorretto:21-alpine3.19
 ENV TZ=America/Sao_Paulo
 WORKDIR /app
-COPY --from=build /app/build/libs/*.jar /app/app.jar
+COPY --from=build /app/build/libs/gateway-0.0.1-SNAPSHOT.jar /app/app.jar
 EXPOSE 8080
 CMD ["java", "-jar", "/app/app.jar"]
