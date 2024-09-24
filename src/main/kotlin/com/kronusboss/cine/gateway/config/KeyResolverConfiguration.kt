@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono
 @Configuration
 class KeyResolverConfiguration {
     @Bean
-    fun notAuthenticatedKeyResolver(): KeyResolver {
+    fun userKeyResolver(): KeyResolver {
         return KeyResolver { exchange ->
             val forwardedFor = exchange.request.headers["X-Forwarded-for"]?.firstOrNull()
             val remoteAddress = exchange.request.remoteAddress?.address?.hostAddress

@@ -14,6 +14,7 @@ spring:
             redis-rate-limiter.replenishRate: 5
             redis-rate-limiter.burstCapacity: 10
             redis-rate-limiter.requestedTokens: 1
+            key-resolver: "#{@userKeyResolver}"
       globalcors:
         cors-configurations:
           '[/**]':
@@ -34,9 +35,6 @@ spring:
             - Path=/api/login
           filters:
             - RewritePath=/api/login, /api/monolith/login
-            - name: RequestRateLimiter
-              args:
-                key-resolver: "#{@notAuthenticatedKeyResolver}"
         - id: publicRoutesService1
           uri: ${gateway.service1.url}
           predicates:
