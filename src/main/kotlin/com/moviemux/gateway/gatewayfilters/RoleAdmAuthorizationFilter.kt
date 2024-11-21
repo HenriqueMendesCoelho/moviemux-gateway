@@ -1,4 +1,4 @@
-package com.kronusboss.cine.gateway.gatewayfilters
+package com.moviemux.gateway.gatewayfilters
 
 import io.jsonwebtoken.Claims
 import org.springframework.cloud.gateway.filter.GatewayFilter

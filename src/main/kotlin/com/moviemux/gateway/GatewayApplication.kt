@@ -1,4 +1,4 @@
-package com.kronusboss.cine.gateway
+package com.moviemux.gateway
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

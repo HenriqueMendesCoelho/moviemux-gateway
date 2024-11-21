@@ -5,8 +5,8 @@ plugins {
     kotlin("plugin.spring") version "1.9.24"
 }
 
-group = "com.kronusboss.cine"
-version = "0.0.1-SNAPSHOT"
+group = "com.moviemux.gateway"
+version = "1.0.0"
 
 java {
     toolchain {

@@ -1,6 +1,6 @@
-package com.kronusboss.cine.gateway.config
+package com.moviemux.gateway.config
 
-import com.kronusboss.cine.gateway.util.JWTUtil
+import com.moviemux.gateway.util.JWTUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver
 import org.springframework.context.annotation.Bean

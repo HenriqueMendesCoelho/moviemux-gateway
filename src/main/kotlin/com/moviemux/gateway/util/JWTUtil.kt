@@ -1,4 +1,4 @@
-package com.kronusboss.cine.gateway.util
+package com.moviemux.gateway.util
 
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts

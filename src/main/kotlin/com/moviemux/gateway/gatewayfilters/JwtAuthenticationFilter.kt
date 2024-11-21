@@ -1,6 +1,6 @@
-package com.kronusboss.cine.gateway.gatewayfilters
+package com.moviemux.gateway.gatewayfilters
 
-import com.kronusboss.cine.gateway.util.JWTUtil
+import com.moviemux.gateway.util.JWTUtil
 import io.jsonwebtoken.Claims
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cloud.gateway.filter.GatewayFilter
