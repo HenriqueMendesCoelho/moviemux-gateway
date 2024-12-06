@@ -1,5 +1,5 @@
 plugins {
-    id("org.springframework.boot") version "3.3.4"
+    id("org.springframework.boot") version "3.3.6"
     id("io.spring.dependency-management") version "1.1.5"
     kotlin("jvm") version "1.9.24"
     kotlin("plugin.spring") version "1.9.24"
@@ -48,3 +48,11 @@ kotlin {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+tasks.named<org.springframework.boot.gradle.tasks.run.BootRun>("bootRun") {
+    jvmArgs = listOf(
+        "-Xms256m",
+        "-Xmx512m",
+        "-XX:+UseZGC"
+    )
+}
+
