@@ -8,51 +8,53 @@ spring:
       password: ${REDIS_PASSWORD}
   cloud:
     gateway:
-      default-filters:
-        - name: RequestRateLimiter
-          args:
-            redis-rate-limiter.replenishRate: 5
-            redis-rate-limiter.burstCapacity: 10
-            redis-rate-limiter.requestedTokens: 1
-            key-resolver: "#{@userKeyResolver}"
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOrigins: ${gateway.origin.url}
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - PATCH
-              - DELETE
-              - OPTIONS
-              - HEAD
-            allowedHeaders: '*'
-      routes:
-        - id: loginRouteService1
-          uri: ${gateway.service1.url}
-          predicates:
-            - Path=/api/login
-          filters:
-            - RewritePath=/api/login, /api/monolith/login
-        - id: publicRoutesService1
-          uri: ${gateway.service1.url}
-          predicates:
-            - Path=/api/public/**
-          filters:
-            - RewritePath=/api/public/, /api/monolith/public/
-        - id: restrictedRoutesService1
-          uri: ${gateway.service1.url}
-          predicates:
-            - Path=/api/restricted/**
-          filters:
-            - JwtAuthenticationFilter
-            - RoleAdmAuthorizationFilter
-            - RewritePath=/api/restricted/, /api/monolith/restricted/
-        - id: authenticatedRoutesService1
-          uri: ${gateway.service1.url}
-          predicates:
-            - Path=/api/**
-          filters:
-            - JwtAuthenticationFilter
-            - RewritePath=/api/, /api/monolith/
+      server:
+        webflux:
+          default-filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                redis-rate-limiter.requestedTokens: 1
+                key-resolver: "#{@userKeyResolver}"
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowedOrigins: ${origin.url}
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - PATCH
+                  - DELETE
+                  - OPTIONS
+                  - HEAD
+                allowedHeaders: '*'
+          routes:
+            - id: loginRouteService1
+              uri: ${service1.url}
+              predicates:
+                - Path=/api/login
+              filters:
+                - RewritePath=/api/login, /api/monolith/login
+            - id: publicRoutesService1
+              uri: ${service1.url}
+              predicates:
+                - Path=/api/public/**
+              filters:
+                - RewritePath=/api/public/, /api/monolith/public/
+            - id: restrictedRoutesService1
+              uri: ${service1.url}
+              predicates:
+                - Path=/api/restricted/**
+              filters:
+                - JwtAuthenticationFilter
+                - RoleAdmAuthorizationFilter
+                - RewritePath=/api/restricted/, /api/monolith/restricted/
+            - id: authenticatedRoutesService1
+              uri: ${service1.url}
+              predicates:
+                - Path=/api/**
+              filters:
+                - JwtAuthenticationFilter
+                - RewritePath=/api/, /api/monolith/
